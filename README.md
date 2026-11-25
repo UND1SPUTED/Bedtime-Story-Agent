@@ -52,22 +52,6 @@ flowchart TD
     F --> L
 ```
 
-## Block diagram
-
-```mermaid
-flowchart TD
-    U[User] -->|request| A[analyze_request<br/>classify category, characters, tone]
-    A -->|brief| W[write_first_draft<br/>storyteller prompt + category guidance]
-    W -->|draft| J[judge_story<br/>rubric scores + feedback]
-    J -->|passed?| D{All scores >= 4?}
-    D -->|no, rounds < 2| R[revise<br/>storyteller + judge feedback]
-    R -->|revised draft| J
-    D -->|yes, or rounds exhausted| O[Story + scores]
-    O --> U
-    U -->|requested change| F[apply_user_feedback<br/>storyteller + user note]
-    F -->|revised draft| J
-```
-
 Components:
 - `main.py`: the command-line loop (input, output, feedback turns).
 - `pipeline.py`: orchestrates the steps above.
@@ -104,7 +88,7 @@ python app.py
 Then open http://127.0.0.1:5000 in your browser.
 
 - **Write:** type a request (or pick an example), then press Write story. The story, judge scores, and a verdict appear. Ask for changes in the box under the story.
-- **Model calls:** expand “Model calls” to see each step (analyzer, first draft, judge, reviser) with its system prompt, user prompt, and output. Use this to judge prompt quality.
+- **Model calls:** expand "Model calls" to see each step (analyzer, first draft, judge, reviser) with its system prompt, user prompt, and output. Use this to judge prompt quality.
 - **Prompts:** the Prompts tab shows every prompt template the agent uses. It sends no requests.
 - **API key:** paste your key in the API key panel and press Save key. It is kept in the server's memory only. It is not written to disk, logged, or shown again. Restarting the server or pressing Forget key removes it. You can instead set `ANTHROPIC_API_KEY` in your terminal before starting, and the UI will use that.
 
@@ -123,7 +107,6 @@ Run the tests with `python -m unittest discover -s tests -v`. They include secur
 ## Run from the terminal (no UI)
 
 This runs the original starter's flow, with the same pipeline.
-
 
 ```bash
 python main.py
