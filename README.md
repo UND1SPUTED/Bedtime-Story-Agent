@@ -17,23 +17,6 @@ A small Python tool that turns a short request into a bedtime story for children
 
 Step-by-step instructions for running, testing, and publishing are in `docs/STEPS.md`.
 
-## Assignment checklist
-
-| Requirement | Where it is met |
-|---|---|
-| Working story generator built from the starter | `main.py` (terminal) and `app.py` (web), both using `pipeline.py` |
-| Calls Claude Haiku 5.5 through the Anthropic SDK, key from an environment variable | `llm.py` (`MODEL`, `ANTHROPIC_API_KEY`) |
-| Request categorized, with tailored prompts | `pipeline.analyze_request`, `prompts.CATEGORIES` |
-| LLM judge that scores the story and feeds back to improve it | `judge.py`, revision loop in `pipeline.improve_story` |
-| Creative extension: reader feedback runs through the same judge | `pipeline.apply_user_feedback`, web "Ask for a change" |
-| Block diagram of the flow | Mermaid diagram below |
-| Note on what to build with two more hours | Docstring at the top of `main.py` |
-| Prompt quality | `prompts.py`, viewable in the app's Prompts tab; inspected per call in "Model calls" |
-| Code quality | Small modules with one job each, 47 automated tests, `DECISIONS.md` explains each change |
-| Evidence of output quality | `sample_outputs.md`, logged automatically from the web app |
-| Public repo with setup and run instructions | This README and `docs/STEPS.md` |
-| No API key in the repository | `.gitignore` excludes `.env` and `.venv/`; the key is never stored in a file |
-
 ## Block diagram
 
 ```mermaid
