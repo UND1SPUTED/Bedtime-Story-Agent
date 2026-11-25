@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bedtime Stories</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <h1 class="brand">Bedtime Stories</h1>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab" role="tab" id="tab-write" aria-controls="panel-write" aria-selected="true" data-tab="write">Write</button>
+        <button class="tab" role="tab" id="tab-prompts" aria-controls="panel-prompts" aria-selected="false" tabindex="-1" data-tab="prompts">Prompts</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="panel-write" role="tabpanel" aria-labelledby="tab-write" class="layout">
+      <aside class="side">
+        <section class="card" aria-labelledby="key-heading">
+          <h2 id="key-heading" class="h3">API key</h2>
+          <p id="key-status" class="muted" role="status">Checking key…</p>
+          <form id="key-form" class="stack" autocomplete="off">
+            <label for="key-input">Anthropic API key</label>
+            <input id="key-input" name="key" type="password" spellcheck="false" autocomplete="off"
+                   placeholder="sk-ant-…" maxlength="220" required>
+            <p class="help">Kept in this server's memory only. It is never written to disk, logged, or shown again.</p>
+            <div class="row">
+              <button type="submit" class="btn primary">Save key</button>
+              <button type="button" id="key-forget" class="btn ghost" hidden>Forget key</button>
+            </div>
+            <p id="key-error" class="error" role="alert" hidden></p>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="ask-heading">
+          <h2 id="ask-heading" class="h3">Story request</h2>
+          <form id="ask-form" class="stack">
+            <label for="ask-input">What should the story be about?</label>
+            <textarea id="ask-input" rows="4" maxlength="500" required
+                      placeholder="A girl named Alice and her best friend Bob, who happens to be a cat."></textarea>
+            <div class="chips" aria-label="Examples">
+              <button type="button" class="chip" data-example="A sleepy dragon who is afraid of the dark and learns to light a tiny lantern.">Sleepy dragon</button>
+              <button type="button" class="chip" data-example="Two friends who get lost in a snowy forest and find their way home by following the stars.">Snowy forest</button>
+              <button type="button" class="chip" data-example="A calm story about a boat on a quiet lake under a full moon.">Quiet lake</button>
+            </div>
+            <div class="row">
+              <button type="submit" id="ask-submit" class="btn primary">Write story</button>
+              <span id="ask-count" class="muted small">0 / 500</span>
+            </div>
+            <p id="ask-error" class="error" role="alert" hidden></p>
+          </form>
+        </section>
+      </aside>
+
+      <div class="main-col">
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+        <p id="sample-counter" class="counter small muted" hidden></p>
+        <div id="skeleton" class="skeleton" hidden aria-hidden="true">
+          <div class="sk sk-title"></div><div class="sk"></div><div class="sk"></div><div class="sk sk-short"></div>
+        </div>
+        <article id="result" class="story" hidden aria-live="polite">
+          <div id="story-body"></div>
+          <section class="scores" aria-labelledby="scores-heading">
+            <h2 id="scores-heading" class="h3">Judge scores</h2>
+            <ul id="scores" class="score-list"></ul>
+            <p id="verdict" class="muted small"></p>
+          </section>
+          <section class="changes" aria-labelledby="changes-heading">
+            <h2 id="changes-heading" class="h3">Ask for a change</h2>
+            <form id="change-form" class="row wrap-row">
+              <label for="change-input" class="sr-only">Requested change</label>
+              <input id="change-input" maxlength="500" placeholder="For example: make it shorter, or add an owl">
+              <button type="submit" id="change-submit" class="btn">Apply change</button>
+            </form>
+            <p id="change-error" class="error" role="alert" hidden></p>
+          </section>
+          <details class="trace">
+            <summary>Model calls <span id="trace-count"></span></summary>
+            <div id="trace"></div>
+          </details>
+        </article>
+        <p id="empty" class="empty">Your story will appear here. You can see every prompt and model call behind it under “Model calls”.</p>
+      </div>
+    </section>
+
+    <section id="panel-prompts" role="tabpanel" aria-labelledby="tab-prompts" class="prompts" hidden>
+      <p class="muted">These are the exact prompts the agent sends. Edit them in <code>prompts.py</code> and restart the server to change them. Nothing on this page sends a request to the model.</p>
+      <div id="prompt-list"></div>
+    </section>
+  </main>
+</body>
+</html>
